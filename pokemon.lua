@@ -1,17 +1,20 @@
 Pokemon = {
-  name = "----",
-  moves = {"----", "----", "----", "----"}
+  name = "—",
+  moves = {"—", "—", "—", "—"}
 }
 
 Move = {
-  name = "----",
-  attack = "--",
-  accuracy = "--",
-  powerpoints = "--"
+  name = "—",
+  type = "—",
+  category = "—",
+  power = "—",
+  accuracy = "—",
+  powerpoints = "—",
+  effect = "—",
 }
 
 function initnames()
-  local asciidex = io.open("ascii/pokedex.txt")
+  local asciidex = io.open("pokedex.txt")
   local lines = {}
   local fileread = asciidex:read("*l")
   while fileread ~= nil do
@@ -26,6 +29,59 @@ function initnames()
   end
 
   return lines
+end
+
+function initmoves()
+  local movedex = io.open("movedex.txt")
+  local lines = {}
+  local fileread = movedex:read("*l")
+  while fileread ~= nil do
+    table.insert(lines, fileread)
+    fileread = movedex:read("*l")
+  end
+
+  local movestemp = {}
+
+  for i, line in ipairs(lines) do
+    local words = {}
+    for word in line:gmatch("%S+") do
+      table.insert(words, word)
+    end
+
+    local continue = false
+    if #words < 7 then
+      continue = true
+    end
+
+    if not continue then
+      local namelen = 1
+
+      while words[namelen] ~= words[namelen]:upper() do
+        namelen = namelen + 1
+      end
+
+      local movetemp = Move:new{type = words[namelen], category = words[namelen + 1], power = words[namelen + 2], accuracy = words[namelen + 3], powerpoints = words[namelen + 4]}
+
+      movetemp.name = ""
+      for i = 1, namelen - 1 do
+        movetemp.name = movetemp.name .. words[i] .. " "
+      end
+      movetemp.name = movetemp.name:sub(1,-2)
+
+      movetemp.effect = ""
+      for i = namelen + 5, #words do
+        movetemp.effect = movetemp.effect .. words[i] .. " "
+      end
+      movetemp.effect = movetemp.effect:sub(1,-2)
+
+      movestemp[movetemp.name] = movetemp
+    end
+  end
+
+  local movetemp = Move:new()
+  movestemp[movetemp.name] = movetemp
+
+  return movestemp
 end
 
 function Pokemon:new(p)
@@ -52,7 +108,4 @@ end
 
 pokenames = initnames()
 
-moves = {}
-moves["----"] = Move:new()
-moves["Growl"] = Move:new{name = "Growl", powerpoints = 40, accuracy = 100}
-moves["Tackle"] = Move:new{name = "Tackle", powerpoints = 35, attack = 40, accuracy = 100}
+moves = initmoves()

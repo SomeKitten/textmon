@@ -4,11 +4,11 @@ require "term"
 pokemon = {}
 
 pokemon[1] = Pokemon:new{
-  name = "Bulbasaur",
-  moves = {
-    "Growl","Tackle"
-  }
+  name = "Test",
+  moves = {}
 }
+for m, _ in pairs(moves) do table.insert(pokemon[1].moves, m) end
+
 pokemon[2] = Pokemon:new()
 pokemon[3] = Pokemon:new()
 pokemon[4] = Pokemon:new()
@@ -32,15 +32,18 @@ function displayPokemon(mon)
     print("[" .. i .. "] " .. mon.moves[i])
   end
 
-  nextFunc = function(input) displayMove(moves[mon.moves[tonumber(input)] or "----"]) end
+  nextFunc = function(input) displayMove(moves[mon.moves[tonumber(input)] or "—"]) end
 end
 
 function displayMove(move)
   print("-----Move------")
   print(move.name)
-  print("Attack: " .. move.attack)
+  print("Type: " .. move.type)
+  print("Category: " .. move.category)
+  print("Power: " .. move.power)
   print("Accuracy: " .. move.accuracy)
   print("Power Points: " .. move.powerpoints)
+  print("Effect: " .. move.effect)
 
   nextFunc = nil
 end
@@ -77,6 +80,7 @@ end
 
 start()
 
+term.clear()
 
 math.randomseed(os.time())
 math.random(); math.random(); math.random()
@@ -84,8 +88,7 @@ pokeascii = math.random(134)
 
 curascii = io.open(string.format("ascii/%03d.txt", pokeascii))
 
-print(curascii:read("*a")..[[
+print("\n\n\n" .. curascii:read("*a")..[[
 
 Thanks for playing!
-
 Have a ]] .. pokenames[pokeascii][2] .. ".")

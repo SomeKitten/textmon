@@ -1,5 +1,5 @@
 # textmon
-Messing around with making a text-based Pokemon game.
+Messing around with making a text-based Pokémon game.
 
 Ascii art taken from [Maija's ASCII Pokédex](https://www.fiikus.net/?pokedex)
 
