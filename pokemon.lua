@@ -60,7 +60,7 @@ function initmoves()
     end
 
     local continue = false
-    if #words < 7 then
+    if #words < 6 then
       continue = true
     end
 

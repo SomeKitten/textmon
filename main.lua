@@ -4,9 +4,15 @@ require "term"
 player = {}
 player.party = {}
 
-player.party[1] = mons["Bulbasaur"]
-player.party[2] = mons["Squirtle"]
-player.party[3] = Pokemon:new()
+player.party[1] = mons["Bulbasaur"]:new()
+player.party[1].moves[1] = "Tackle"
+
+player.party[2] = mons["Squirtle"]:new()
+player.party[2].moves[1] = "Tail Whip"
+
+player.party[3] = mons["Bulbasaur"]:new()
+player.party[3].moves[1] = "Vine Whip"
+
 player.party[4] = Pokemon:new()
 player.party[5] = Pokemon:new()
 player.party[6] = Pokemon:new()
@@ -22,30 +28,44 @@ function displayParty()
     end
   end
 
-  nextFunc = function(input) displayPokemon(player.party[tonumber(input)] or {}) end
+  nextFunc = function(input) return displayPokemon(player.party[tonumber(input)]) end
+
+  return false
 end
 
 function displayPokemon(mon)
-  print("----Pokemon----")
-  print(mon.name)
-  for i = 1, 4 do
-    print("[" .. i .. "] " .. mon.moves[i])
-  end
+  if mon ~= nil and mon.name ~= "—" then
+    print("----Pokemon----")
+    print(mon.name)
+    for i = 1, 4 do
+      print("[" .. i .. "] " .. mon.moves[i])
+    end
 
-  nextFunc = function(input) displayMove(moves[mon.moves[tonumber(input)] or "—"]) end
+    nextFunc = function(input) return displayMove(moves[mon.moves[tonumber(input)]]) end
+
+    return true
+  end
+  return false
 end
 
 function displayMove(move)
-  print("-----Move------")
-  print(move.name)
-  print("Type: " .. move.type)
-  print("Category: " .. move.category)
-  print("Power: " .. move.power)
-  print("Accuracy: " .. move.accuracy)
-  print("Power Points: " .. move.powerpoints)
-  print("Effect: " .. move.effect)
+  if move ~= nil and move.name ~= "—" then
+    print("-----Move------")
+    print(move.name)
+    print("Type: " .. move.type)
+    print("Category: " .. move.category)
+    print("Power: " .. move.power)
+    print("Accuracy: " .. move.accuracy)
+    print("Power Points: " .. move.powerpoints)
+    if move.effect ~= "" then
+      print("Effect: " .. move.effect)
+    end
 
-  nextFunc = nil
+    nextFunc = function() return false end
+
+    return true
+  end
+  return false
 end
 
 function start()
@@ -61,22 +81,22 @@ function start()
     io.write("> ")
     local input = io.read()
 
-    if input == "" or nextFunc == nil then
-      table.remove(functree)
+    term.clear()
+    local curfunc = nextFunc
+    local test = nextFunc(input)
+    if test then
+      local inp = input
+      table.insert(functree, function() return curfunc(inp) end)
     else
-      local curfunc = nextFunc
-      table.insert(functree, function() curfunc(input) end)
-    end
-
-    if functree[#functree] ~= nil then
-      term.clear()
-      functree[#functree]()
-    else
-      break
+      if input == "" then table.remove(functree) end
+      if functree[#functree] ~= nil then
+        functree[#functree]()
+      else
+        break
+      end
     end
   end
 end
-
 
 start()
 
