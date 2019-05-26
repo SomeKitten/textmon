@@ -1,28 +1,28 @@
 require "pokemon"
 require "term"
 
-pokemon = {}
+player = {}
+player.party = {}
 
-pokemon[1] = Pokemon:new{
-  name = "Test",
-  moves = {}
-}
-for m, _ in pairs(moves) do table.insert(pokemon[1].moves, m) end
-
-pokemon[2] = Pokemon:new()
-pokemon[3] = Pokemon:new()
-pokemon[4] = Pokemon:new()
-pokemon[5] = Pokemon:new()
-pokemon[6] = Pokemon:new()
+player.party[1] = mons["Bulbasaur"]
+player.party[2] = mons["Squirtle"]
+player.party[3] = Pokemon:new()
+player.party[4] = Pokemon:new()
+player.party[5] = Pokemon:new()
+player.party[6] = Pokemon:new()
 
 function displayParty()
   print("-----Party-----")
   for i = 1, 6 do
-    local mon = pokemon[i]
-    print("[" .. i .. "] " .. mon.name)
+    local mon = player.party[i]
+    if mon.name ~= "—" then
+      print("[" .. i .. "] " .. mon.name .. " \t[ HP:" .. string.format("%03d",mon.healthpoints) .. " | Attack:" .. string.format("%03d",mon.attack) .. " | Defence:" .. string.format("%03d",mon.defence) .. " | Sp. Atk:" .. string.format("%03d",mon.specialattack) .. " | Sp. Def:" .. string.format("%03d",mon.specialdefence) .. " | Speed:" .. string.format("%03d",mon.speed) .. " ]")
+    else
+      print("[" .. i .. "] " .. mon.name)
+    end
   end
 
-  nextFunc = function(input) displayPokemon(pokemon[tonumber(input)] or {}) end
+  nextFunc = function(input) displayPokemon(player.party[tonumber(input)] or {}) end
 end
 
 function displayPokemon(mon)

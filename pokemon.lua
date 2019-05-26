@@ -1,6 +1,12 @@
 Pokemon = {
   name = "—",
-  moves = {"—", "—", "—", "—"}
+  moves = {"—", "—", "—", "—"},
+  healthpoints = "—",
+  attack = "—",
+  defence = "—",
+  specialattack = "—",
+  specialdefence = "—",
+  speed = "—"
 }
 
 Move = {
@@ -11,6 +17,11 @@ Move = {
   accuracy = "—",
   powerpoints = "—",
   effect = "—",
+}
+
+Trainer = {
+  name = "—",
+  party = {}
 }
 
 function initnames()
@@ -107,5 +118,18 @@ function Move:new(m)
 end
 
 pokenames = initnames()
+
+mons = {}
+for _, name in pairs(pokenames) do
+  mons[name[2]] = Pokemon:new{
+    name = name[2],
+    healthpoints = name[3],
+    attack = name[4],
+    defence = name[5],
+    specialattack = name[6],
+    specialdefence = name[7],
+    speed = name[8]
+  }
+end
 
 moves = initmoves()

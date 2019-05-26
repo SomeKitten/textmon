@@ -1,10 +1,10 @@
-#001 Bulbasaur
+#001 Bulbasaur 45 49 49 65 65 45
 #002 Ivysaur
 #003 Venusaur
 #004 Charmander
 #005 Charmeleon
 #006 Charizard
-#007 Squirtle
+#007 Squirtle 44 48 65 50 64 43
 #008 Wartortle
 #009 Blastoise
 #010 Cataperie
