@@ -2,6 +2,10 @@ require "pokemon"
 require "term"
 require "displays"
 
+battlestate = {
+  currentmon = 1
+}
+
 player = Trainer:new()
 
 player.party[1] = mons["Bulbasaur"]:new()
@@ -30,7 +34,7 @@ function start()
 
   while true do
     io.write("> ")
-    local input = io.read()
+    input = io.read()
 
     term.clear()
     local curfunc = nextFunc

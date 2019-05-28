@@ -49,6 +49,23 @@ function displayMove(move)
   return false
 end
 
+function displayBattle()
+  print("----Battle-----")
+  print("[1] Fight")
+  print("[2] Run")
+
+  nextFunc = function(inp)
+    if inp == "1" then
+      return displayFight(player.party[battlestate.currentmon])
+    end
+
+    input = ""
+    return false
+  end
+
+  return true
+end
+
 function displayMainMenu()
   print("---Main Menu---")
   print("[1] Party")
@@ -63,5 +80,5 @@ function displayMainMenu()
     return false
   end
 
-  return false
+  return true
 end
