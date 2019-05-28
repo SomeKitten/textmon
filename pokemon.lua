@@ -2,6 +2,7 @@ Pokemon = {
   name = "—",
   moves = {"—", "—", "—", "—"},
   healthpoints = "—",
+  curhp = "—",
   attack = "—",
   defence = "—",
   specialattack = "—",
@@ -105,7 +106,22 @@ function Pokemon:new(p)
   setmetatable(p.moves, self.moves)
   self.moves.__index = self.moves
 
+  p.curhp = p.healthpoints
+
   return p
+end
+
+function Trainer:new(t)
+  t = t or {}
+  t.party = t.party or {}
+
+  setmetatable(t, self)
+  self.__index = self
+
+  setmetatable(t.party, self.party)
+  self.party.__index = self.party
+
+  return t
 end
 
 function Move:new(m)

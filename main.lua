@@ -1,8 +1,7 @@
 require "pokemon"
 require "term"
 
-player = {}
-player.party = {}
+player = Trainer:new()
 
 player.party[1] = mons["Bulbasaur"]:new()
 player.party[1].moves[1] = "Tackle"
@@ -11,20 +10,22 @@ player.party[2] = mons["Squirtle"]:new()
 player.party[2].moves[1] = "Tail Whip"
 
 player.party[3] = mons["Bulbasaur"]:new()
-player.party[3].moves[1] = "Vine Whip"
+player.party[3].moves[2] = "Vine Whip"
+player.party[3].curhp = 35
 
-player.party[4] = Pokemon:new()
-player.party[5] = Pokemon:new()
-player.party[6] = Pokemon:new()
+opponent = Trainer:new()
+
+opponent.party[1] = mons["Charmander"]:new()
+opponent.party[1].moves[1] = "Scratch"
 
 function displayParty()
   print("-----Party-----")
   for i = 1, 6 do
     local mon = player.party[i]
-    if mon.name ~= "—" then
-      print("[" .. i .. "] " .. mon.name .. " \t[ HP:" .. string.format("%03d",mon.healthpoints) .. " | Attack:" .. string.format("%03d",mon.attack) .. " | Defence:" .. string.format("%03d",mon.defence) .. " | Sp. Atk:" .. string.format("%03d",mon.specialattack) .. " | Sp. Def:" .. string.format("%03d",mon.specialdefence) .. " | Speed:" .. string.format("%03d",mon.speed) .. " ]")
+    if mon ~= nil and mon.name ~= "—" then
+      print("[" .. i .. "] " .. mon.name .. " \t[ HP:" .. string.format("%03d",mon.curhp) .. "/" .. string.format("%03d",mon.healthpoints) .. " | Attack:" .. string.format("%03d",mon.attack) .. " | Defence:" .. string.format("%03d",mon.defence) .. " | Sp. Atk:" .. string.format("%03d",mon.specialattack) .. " | Sp. Def:" .. string.format("%03d",mon.specialdefence) .. " | Speed:" .. string.format("%03d",mon.speed) .. " ]")
     else
-      print("[" .. i .. "] " .. mon.name)
+      print("[" .. i .. "] " .. "—")
     end
   end
 
