@@ -8,20 +8,25 @@ battlestate = {
 
 player = Trainer:new()
 
-player.party[1] = mons["Bulbasaur"]:new()
+player.name = "Scarlett"
+
+player.party[1] = mons["Bulbasaur"]:new({level = 100})
 player.party[1].moves[1] = "Tackle"
 
-player.party[2] = mons["Squirtle"]:new()
+player.party[2] = mons["Squirtle"]:new({level = 7})
 player.party[2].moves[1] = "Tail Whip"
 
-player.party[3] = mons["Bulbasaur"]:new()
+player.party[3] = mons["Bulbasaur"]:new({level = 100})
 player.party[3].moves[2] = "Vine Whip"
 player.party[3].curhp = 35
 
 opponent = Trainer:new()
 
-opponent.party[1] = mons["Charmander"]:new()
+opponent.name = "Ack Ketchup"
+
+opponent.party[1] = mons["Charmander"]:new({level = 5})
 opponent.party[1].moves[1] = "Scratch"
+opponent.party[1].curhp = 0
 
 function start()
   functree = {}

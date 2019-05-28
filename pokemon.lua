@@ -7,7 +7,8 @@ Pokemon = {
   defence = "—",
   specialattack = "—",
   specialdefence = "—",
-  speed = "—"
+  speed = "—",
+  level = "—"
 }
 
 Move = {
@@ -17,7 +18,7 @@ Move = {
   power = "—",
   accuracy = "—",
   powerpoints = "—",
-  effect = "—",
+  effect = "—"
 }
 
 Trainer = {
@@ -96,6 +97,14 @@ function initmoves()
   return movestemp
 end
 
+function genStat(p, stat)
+  if stat ~= "healthpoints" then
+    return math.floor(math.floor((2 * p[stat] + 63 + 0) * p.level / 100 + 5) * 1)
+  else
+    return math.floor((2 * p[stat]  + 63 + 0) * p.level / 100 + p.level + 10)
+  end
+end
+
 function Pokemon:new(p)
   p = p or {}
   p.moves = p.moves or {}
@@ -105,6 +114,15 @@ function Pokemon:new(p)
 
   setmetatable(p.moves, self.moves)
   self.moves.__index = self.moves
+
+  if self.name ~= "—" then
+    p.healthpoints = genStat(p, "healthpoints")
+    p.attack = genStat(p, "attack")
+    p.defence = genStat(p, "defence")
+    p.specialattack = genStat(p, "specialattack")
+    p.specialdefence = genStat(p, "specialdefence")
+    p.speed = genStat(p, "speed")
+  end
 
   p.curhp = p.healthpoints
 
